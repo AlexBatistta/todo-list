@@ -1,14 +1,28 @@
 import { type TodoType } from '../type';
 import { FaCheck, FaRegTimesCircle } from 'react-icons/fa';
+import { RiDraggable } from 'react-icons/ri';
 
-type Props = TodoType;
+interface Props extends TodoType {
+	onRemove: (id: string) => void;
+}
 
-export const Todo: React.FC<Props> = ({ id, title, completed }) => {
+export const Todo: React.FC<Props> = ({
+	id,
+	title,
+	completed,
+	priority,
+	onRemove,
+}) => {
 	return (
-		<div className="group flex justify-between items-center bg-slate-200 px-3 py-2 rounded-lg shadow-md gap-4 hover:bg-slate-300 w-full">
+		<div
+			className={`flex justify-between items-center px-3 py-2 rounded-lg shadow-md gap-4 ${priority === 'low' ? 'hover:bg-green-200' : priority === 'medium' ? 'hover:bg-yellow-100' : 'hover:bg-red-200'} w-full overflow-hidden ${priority === 'low' ? 'bg-green-100' : priority === 'medium' ? 'bg-yellow-50' : 'bg-red-100'}`}
+		>
+			<div className="relative flex items-center justify-center">
+				<RiDraggable className="absolute text-2xl text-slate-500" />
+			</div>
 			<div className="relative w-6 h-6 flex items-center justify-center">
 				<input
-					className="appearance-none w-4 h-4 cursor-pointer border-1 rounded-full border-slate-700 checked:border-slate-400"
+					className="appearance-none w-4 h-4 cursor-pointer border-2 rounded-full border-slate-700 checked:border-slate-700/10"
 					type="checkbox"
 					id={id}
 					checked={completed}
@@ -18,7 +32,7 @@ export const Todo: React.FC<Props> = ({ id, title, completed }) => {
 				/>
 				{completed && (
 					<FaCheck
-						className="absolute text-green-500 top-0 left-[4px] pointer-events-none"
+						className="absolute text-green-500 pointer-events-none"
 						size={20}
 					/>
 				)}
@@ -29,14 +43,19 @@ export const Todo: React.FC<Props> = ({ id, title, completed }) => {
 			</label>
 			<div className="relative w-5 h-5">
 				<FaRegTimesCircle
-					className="absolute group-hover:block sm:hidden text-red-500 pointer-events-none"
+					className="absolute text-slate-700 pointer-events-none"
 					size={20}
 				/>
 				<button
-					className="absolute w-5 h-5 sm:hidden group-hover:block cursor-pointer"
+					className="absolute w-5 h-5 cursor-pointer"
 					onClick={() => {
-						console.log('Delete Todo', id);
+						onRemove(id);
 					}}
+				/>
+			</div>
+			<div className="relative flex items-center justify-start">
+				<div
+					className={`absolute h-14 w-3 ${priority === 'low' ? 'bg-green-300' : priority === 'medium' ? 'bg-yellow-300' : 'bg-red-300'}`}
 				/>
 			</div>
 		</div>
