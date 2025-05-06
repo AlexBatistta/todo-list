@@ -3,6 +3,18 @@ import { FaCheck, FaRegTimesCircle } from 'react-icons/fa';
 import { RiDraggable } from 'react-icons/ri';
 import type { SyntheticListenerMap } from '@dnd-kit/core/dist/hooks/utilities';
 
+const priorityClasses = {
+	low: 'hover:bg-green-200 bg-green-100',
+	medium: 'hover:bg-yellow-100 bg-yellow-50',
+	high: 'hover:bg-red-200 bg-red-100',
+};
+
+const priorityBarColors = {
+	low: 'bg-green-300',
+	medium: 'bg-yellow-300',
+	high: 'bg-red-300',
+};
+
 interface DragHandleProps {
 	listeners?: SyntheticListenerMap;
 	attributes?: Record<string, any>;
@@ -24,13 +36,7 @@ export const Todo: React.FC<Props> = ({
 }) => {
 	return (
 		<div
-			className={`flex justify-between items-center px-3 py-2 rounded-lg shadow-md gap-4 ${
-				priority === 'low'
-					? 'hover:bg-green-200 bg-green-100'
-					: priority === 'medium'
-						? 'hover:bg-yellow-100 bg-yellow-50'
-						: 'hover:bg-red-200 bg-red-100'
-			} w-full overflow-hidden`}
+			className={`flex justify-between items-center px-3 py-2 rounded-lg shadow-md gap-4 ${priorityClasses[priority]} w-full overflow-hidden`}
 		>
 			<div
 				className="text-2xl text-slate-500 cursor-grab active:cursor-grabbing"
@@ -75,13 +81,7 @@ export const Todo: React.FC<Props> = ({
 
 			<div className="relative flex items-center justify-start">
 				<div
-					className={`absolute h-14 w-3 ${
-						priority === 'low'
-							? 'bg-green-300'
-							: priority === 'medium'
-								? 'bg-yellow-300'
-								: 'bg-red-300'
-					}`}
+					className={`absolute h-14 w-3 ${priorityBarColors[priority]}`}
 				/>
 			</div>
 		</div>
