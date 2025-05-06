@@ -78,7 +78,7 @@ export const Todo: React.FC<Props> = ({
 					onClick={() => onRemove(id)}
 				/>
 			</div>
-
+			<label className="hidden">{description}</label>
 			<div className="relative flex items-center justify-start">
 				<div
 					className={`absolute h-14 w-3 ${priorityBarColors[priority]}`}
