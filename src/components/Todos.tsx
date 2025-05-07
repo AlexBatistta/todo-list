@@ -59,14 +59,7 @@ export const Todos: React.FC<Props> = ({ todos, onRemove, onReorder }) => {
 	const listRef = useRef<HTMLUListElement>(null);
 	const [isDragging, setIsDragging] = useState(false);
 
-	const sensors = useSensors(
-		useSensor(PointerSensor, {
-			activationConstraint: {
-				distance: 5,
-			},
-			preventScroll: true,
-		}),
-	);
+	const sensors = useSensors(useSensor(PointerSensor));
 
 	const handleDragEnd = (event: DragEndEvent): void => {
 		setIsDragging(false);
