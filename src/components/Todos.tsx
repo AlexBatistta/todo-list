@@ -41,7 +41,7 @@ function SortableItem({
 	};
 
 	return (
-		<li ref={setNodeRef} style={style} className="w-full">
+		<li ref={setNodeRef} style={style} className='w-full'>
 			<Todo
 				id={todo.id}
 				title={todo.title}
@@ -81,8 +81,8 @@ export const Todos: React.FC<Props> = ({ todos, onRemove, onReorder }) => {
 				items={todos.map((t) => t.id)}
 				strategy={verticalListSortingStrategy}
 			>
-				<div className="bg-slate-100 w-[80%] h-[90%] p-10 rounded-3xl shadow-lg shadow-slate-500/50 flex flex-col justify-between gap-2">
-					<ul className="flex flex-col h-full gap-4 overflow-y-auto pb-4">
+				<div className='bg-slate-100 w-[90%] lg:w-[80%] h-[90%] p-5 lg:p-10 rounded-3xl shadow-lg shadow-slate-500/50 flex flex-col justify-between gap-2'>
+					<ul className='flex flex-col h-full gap-4 overflow-y-auto pb-4'>
 						{todos.map((todo) => (
 							<SortableItem
 								key={todo.id}

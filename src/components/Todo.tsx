@@ -39,7 +39,7 @@ export const Todo: React.FC<Props> = ({
 			className={`flex justify-between items-center py-2 rounded-lg shadow-md gap-4 ${priorityClasses[priority]} w-full overflow-hidden`}
 		>
 			<div
-				className='relative text-2xl flex justify-center items-center  text-slate-500 cursor-grab active:cursor-grabbing w-6 h-7'
+				className='relative text-2xl flex justify-start items-center  text-slate-500 cursor-grab active:cursor-grabbing w-6 h-7'
 				{...dragHandleProps?.attributes}
 				{...dragHandleProps?.listeners}
 			>

@@ -15,8 +15,10 @@ export const App = (): JSX.Element => {
 	};
 
 	return (
-		<div className="flex flex-col justify-around items-center bg-slate-300 w-full h-screen py-5">
-			<h1 className="text-4xl font-bold text-slate-700">To-Do List</h1>
+		<div className='flex flex-col justify-around items-center bg-slate-300 w-full h-screen py-3 lg:py-5'>
+			<h1 className='text-3xl lg:text-4xl font-bold text-slate-700'>
+				To-Do List
+			</h1>
 			<Todos
 				todos={todos}
 				onRemove={handleRemove}
