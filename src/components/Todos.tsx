@@ -56,7 +56,14 @@ function SortableItem({
 }
 
 export const Todos: React.FC<Props> = ({ todos, onRemove, onReorder }) => {
-	const sensors = useSensors(useSensor(PointerSensor));
+	const sensors = useSensors(
+		useSensor(PointerSensor, {
+			activationConstraint: {
+				distance: 5,
+			},
+			preventScroll: true,
+		}),
+	);
 
 	const handleDragEnd = (event: DragEndEvent): void => {
 		const { active, over } = event;
