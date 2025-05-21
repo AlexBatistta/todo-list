@@ -36,10 +36,10 @@ export const Todo: React.FC<Props> = ({
 }) => {
 	return (
 		<div
-			className={`flex justify-between items-center py-2 rounded-lg shadow-md gap-4 ${priorityClasses[priority]} w-full overflow-hidden`}
+			className={`flex justify-between items-center py-2 rounded-lg shadow-md ${priorityClasses[priority]} w-full overflow-hidden`}
 		>
 			<div
-				className='relative text-2xl flex justify-start items-center  text-slate-500 cursor-grab active:cursor-grabbing w-6 h-7'
+				className='relative text-2xl flex justify-start items-center text-slate-500 cursor-grab active:cursor-grabbing w-6 h-7'
 				{...dragHandleProps?.attributes}
 				{...dragHandleProps?.listeners}
 			>
@@ -67,11 +67,11 @@ export const Todo: React.FC<Props> = ({
 				)}
 			</div>
 
-			<label className='font-medium text-xl text-slate-700 flex-grow truncate overflow-hidden whitespace-nowrap w-full'>
+			<label className='font-medium text-xl text-slate-700 flex-grow truncate overflow-hidden whitespace-nowrap w-[50%]'>
 				{title}
 			</label>
 
-			<div className='relative flex items-center justify-center'>
+			<div className='relative flex items-center justify-center bg-red-500 mr-1 ml-4'>
 				<FaRegTimesCircle
 					className='absolute text-slate-500 pointer-events-none flex-grow truncate overflow-hidden whitespace-nowrap'
 					size={20}

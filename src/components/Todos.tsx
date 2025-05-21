@@ -5,6 +5,7 @@ import {
 	DndContext,
 	closestCenter,
 	PointerSensor,
+	TouchSensor,
 	useSensor,
 	useSensors,
 } from '@dnd-kit/core';
@@ -59,7 +60,10 @@ export const Todos: React.FC<Props> = ({ todos, onRemove, onReorder }) => {
 	const listRef = useRef<HTMLUListElement>(null);
 	const [isDragging, setIsDragging] = useState(false);
 
-	const sensors = useSensors(useSensor(PointerSensor));
+	const sensors = useSensors(
+		useSensor(PointerSensor),
+		useSensor(TouchSensor),
+	);
 
 	const handleDragEnd = (event: DragEndEvent): void => {
 		setIsDragging(false);
@@ -97,7 +101,7 @@ export const Todos: React.FC<Props> = ({ todos, onRemove, onReorder }) => {
 				<div className='bg-slate-100 w-[90%] lg:w-[80%] h-[90%] p-5 lg:p-10 rounded-3xl shadow-lg shadow-slate-500/50 flex flex-col justify-between gap-2'>
 					<ul
 						ref={listRef}
-						className='flex flex-col h-full gap-4 overflow-y-auto overflow-x-hidden pb-4'
+						className={`flex flex-col h-full gap-4 overflow-y-auto overflow-x-hidden pb-4 ${isDragging && 'touch-none'}`}
 					>
 						{todos.map((todo) => (
 							<SortableItem
