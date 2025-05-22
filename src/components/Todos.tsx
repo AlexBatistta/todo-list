@@ -98,10 +98,10 @@ export const Todos: React.FC<Props> = ({ todos, onRemove, onReorder }) => {
 				items={todos.map((t) => t.id)}
 				strategy={verticalListSortingStrategy}
 			>
-				<div className='bg-slate-100 w-[90%] lg:w-[80%] h-[90%] p-5 lg:p-10 rounded-3xl shadow-lg shadow-slate-500/50 flex flex-col justify-between gap-2'>
+				<div className='flex h-[90%] w-[90%] flex-col justify-between gap-2 rounded-3xl bg-slate-100 p-5 shadow-lg shadow-slate-500/50 lg:w-[80%] lg:p-10'>
 					<ul
 						ref={listRef}
-						className={`flex flex-col h-full gap-4 overflow-y-auto overflow-x-hidden pb-4 ${isDragging && 'touch-none'}`}
+						className={`flex h-full flex-col gap-4 overflow-x-hidden overflow-y-auto pb-4 ${isDragging && 'touch-none'}`}
 					>
 						{todos.map((todo) => (
 							<SortableItem

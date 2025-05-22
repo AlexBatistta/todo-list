@@ -36,10 +36,10 @@ export const Todo: React.FC<Props> = ({
 }) => {
 	return (
 		<div
-			className={`flex justify-between items-center py-2 rounded-lg shadow-md ${priorityClasses[priority]} w-full overflow-hidden`}
+			className={`flex items-center justify-between rounded-lg py-2 shadow-md ${priorityClasses[priority]} w-full overflow-hidden`}
 		>
 			<div
-				className='relative text-2xl flex justify-start items-center text-slate-500 cursor-grab active:cursor-grabbing w-6 h-7'
+				className='relative flex h-7 w-6 cursor-grab items-center justify-start text-2xl text-slate-500 active:cursor-grabbing'
 				{...dragHandleProps?.attributes}
 				{...dragHandleProps?.listeners}
 			>
@@ -48,7 +48,7 @@ export const Todo: React.FC<Props> = ({
 
 			<div className='relative flex items-center justify-center'>
 				<input
-					className='appearance-none w-8 h-7 cursor-pointer'
+					className='h-7 w-8 cursor-pointer appearance-none'
 					type='checkbox'
 					id={id}
 					checked={completed}
@@ -57,32 +57,32 @@ export const Todo: React.FC<Props> = ({
 					}}
 				/>
 				<div
-					className={`absolute pointer-events-none w-4 h-4 border-2 rounded-full  ${completed ? 'border-slate-500/25' : 'border-slate-500'}`}
+					className={`pointer-events-none absolute h-4 w-4 rounded-full border-2 ${completed ? 'border-slate-500/25' : 'border-slate-500'}`}
 				/>
 				{completed && (
 					<FaCheck
-						className='absolute text-green-500 pointer-events-none'
+						className='pointer-events-none absolute text-green-500'
 						size={20}
 					/>
 				)}
 			</div>
 
-			<label className='font-medium text-xl text-slate-700 flex-grow truncate overflow-hidden whitespace-nowrap w-[50%]'>
+			<label className='w-[50%] flex-grow truncate overflow-hidden text-xl font-medium whitespace-nowrap text-slate-700'>
 				{title}
 			</label>
 
-			<div className='relative flex items-center justify-center bg-red-500 mr-1 ml-4'>
+			<div className='relative mr-1 ml-4 flex items-center justify-center bg-red-500'>
 				<FaRegTimesCircle
-					className='absolute text-slate-500 pointer-events-none flex-grow truncate overflow-hidden whitespace-nowrap'
+					className='pointer-events-none absolute flex-grow truncate overflow-hidden whitespace-nowrap text-slate-500'
 					size={20}
 				/>
 				<button
-					className='absolute w-8 h-7 cursor-pointer'
+					className='absolute h-7 w-8 cursor-pointer'
 					onClick={() => onRemove(id)}
 				/>
 			</div>
 			<label className='hidden'>{description}</label>
-			<div className='relative flex items-center justify-end w-6 h-7'>
+			<div className='relative flex h-7 w-6 items-center justify-end'>
 				<div
 					className={`absolute h-14 w-3 ${priorityBarColors[priority]}`}
 				/>

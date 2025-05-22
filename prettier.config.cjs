@@ -8,4 +8,5 @@ module.exports = {
 	useTabs: true,
 	bracketSpacing: true,
 	jsxSingleQuote: true,
+	plugins: ['prettier-plugin-tailwindcss'],
 };

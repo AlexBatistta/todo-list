@@ -1,6 +1,7 @@
 import { useState, type JSX } from 'react';
 import { mockToDos } from './mockToDos';
 import { Todos } from './components/Todos';
+import { Header } from './components/Header';
 
 export const App = (): JSX.Element => {
 	const [todos, setTodos] = useState(mockToDos);
@@ -15,10 +16,8 @@ export const App = (): JSX.Element => {
 	};
 
 	return (
-		<div className='flex flex-col justify-around items-center bg-slate-300 w-full h-[100dvh] py-3 lg:py-5'>
-			<h1 className='text-3xl lg:text-4xl font-bold text-slate-700'>
-				To-Do List
-			</h1>
+		<div className='flex h-[100dvh] w-full flex-col items-center justify-around bg-slate-300 py-3 lg:py-5'>
+			<Header />
 			<Todos
 				todos={todos}
 				onRemove={handleRemove}
