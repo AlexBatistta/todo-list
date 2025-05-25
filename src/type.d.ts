@@ -4,6 +4,7 @@ export interface TodoType {
 	description: string;
 	completed: boolean;
 	priority: 'low' | 'medium' | 'high';
+	order: number;
 }
 
 export type ListOfTodos = TodoType[];

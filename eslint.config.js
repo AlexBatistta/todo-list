@@ -21,7 +21,6 @@ export default defineConfig([
 		rules: {
 			'react/react-in-jsx-scope': 'off',
 			'@typescript-eslint/explicit-function-return-type': 'error',
-			'no-console': 'warn',
 			eqeqeq: ['error', 'always'],
 			curly: 'error',
 			'react/jsx-boolean-value': ['error', 'never'],

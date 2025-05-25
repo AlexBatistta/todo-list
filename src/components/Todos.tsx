@@ -49,6 +49,7 @@ function SortableItem({
 				description={todo.description}
 				completed={todo.completed}
 				priority={todo.priority}
+				order={todo.order}
 				onRemove={onRemove}
 				dragHandleProps={{ listeners, attributes }}
 			/>

@@ -10,10 +10,11 @@ export const AddModal: React.FC<Props> = ({ onAdd, onClose }) => {
 	const handleAddTodo = (): void => {
 		const newTodo: TodoType = {
 			id: crypto.randomUUID(),
-			title: 'New Todo',
+			title: `New Todo ${Math.floor(Math.random() * 11)}`,
 			description: 'Description of the new todo',
 			completed: false,
 			priority: 'low',
+			order: -1,
 		};
 		onAdd(newTodo);
 	};
