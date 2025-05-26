@@ -1,5 +1,5 @@
 import { FaRegTimesCircle } from 'react-icons/fa';
-import { MdOutlineFilterAlt, MdOutlineFilterAltOff } from 'react-icons/md';
+import { MdOutlineFilterAlt } from 'react-icons/md';
 
 interface Props {
 	className?: string;
