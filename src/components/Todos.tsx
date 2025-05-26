@@ -24,14 +24,17 @@ interface Props {
 	todos: ListOfTodos;
 	onRemove: (id: string) => void;
 	onReorder: (newTodos: ListOfTodos) => void;
+	onCompletedToggle: (id: string) => void;
 }
 
 function SortableItem({
 	todo,
 	onRemove,
+	onCompletedToggle,
 }: {
 	todo: ListOfTodos[number];
 	onRemove: (id: string) => void;
+	onCompletedToggle: (id: string) => void;
 }): JSX.Element {
 	const { attributes, listeners, setNodeRef, transform, transition } =
 		useSortable({ id: todo.id });
@@ -46,18 +49,23 @@ function SortableItem({
 			<Todo
 				id={todo.id}
 				title={todo.title}
-				description={todo.description}
 				completed={todo.completed}
 				priority={todo.priority}
 				order={todo.order}
 				onRemove={onRemove}
 				dragHandleProps={{ listeners, attributes }}
+				onCompletedToggle={onCompletedToggle}
 			/>
 		</li>
 	);
 }
 
-export const Todos: React.FC<Props> = ({ todos, onRemove, onReorder }) => {
+export const Todos: React.FC<Props> = ({
+	todos,
+	onRemove,
+	onReorder,
+	onCompletedToggle,
+}) => {
 	const listRef = useRef<HTMLUListElement>(null);
 	const [isDragging, setIsDragging] = useState(false);
 
@@ -109,6 +117,7 @@ export const Todos: React.FC<Props> = ({ todos, onRemove, onReorder }) => {
 								key={todo.id}
 								todo={todo}
 								onRemove={onRemove}
+								onCompletedToggle={onCompletedToggle}
 							/>
 						))}
 					</ul>

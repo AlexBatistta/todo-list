@@ -23,16 +23,17 @@ interface DragHandleProps {
 interface Props extends TodoType {
 	onRemove: (id: string) => void;
 	dragHandleProps?: DragHandleProps;
+	onCompletedToggle: (id: string) => void;
 }
 
 export const Todo: React.FC<Props> = ({
 	id,
 	title,
-	description,
 	completed,
 	priority,
 	onRemove,
 	dragHandleProps,
+	onCompletedToggle,
 }) => {
 	return (
 		<div
@@ -53,7 +54,7 @@ export const Todo: React.FC<Props> = ({
 					id={id}
 					checked={completed}
 					onChange={() => {
-						console.log('Toggle Todo', id);
+						onCompletedToggle(id);
 					}}
 				/>
 				<div
@@ -67,7 +68,7 @@ export const Todo: React.FC<Props> = ({
 				)}
 			</div>
 
-			<label className='w-[50%] flex-grow truncate overflow-hidden text-xl font-medium whitespace-nowrap text-slate-700'>
+			<label className='text-md w-[50%] flex-grow overflow-hidden font-medium text-slate-700 sm:text-sm'>
 				{title}
 			</label>
 
@@ -81,7 +82,6 @@ export const Todo: React.FC<Props> = ({
 					onClick={() => onRemove(id)}
 				/>
 			</div>
-			<label className='hidden'>{description}</label>
 			<div className='relative flex h-7 w-6 items-center justify-end'>
 				<div
 					className={`absolute h-14 w-3 ${priorityBarColors[priority]}`}

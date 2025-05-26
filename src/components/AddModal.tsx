@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useRef } from 'react';
 import type { TodoType } from '../type';
 import { FaCheck, FaRegTimesCircle } from 'react-icons/fa';
 
@@ -7,13 +7,24 @@ interface Props {
 	onClose: () => void;
 }
 export const AddModal: React.FC<Props> = ({ onAdd, onClose }) => {
+	const titleRef = useRef<HTMLInputElement>(null);
+	const priorityRef = useRef<HTMLSelectElement>(null);
+
 	const handleAddTodo = (): void => {
+		const title = titleRef.current?.value.trim() || '';
+		const priority =
+			(priorityRef.current?.value as 'low' | 'medium' | 'high') || 'low';
+
+		if (!title) {
+			alert('Title is required.');
+			return;
+		}
+
 		const newTodo: TodoType = {
 			id: crypto.randomUUID(),
-			title: `New Todo ${Math.floor(Math.random() * 11)}`,
-			description: 'Description of the new todo',
+			title,
 			completed: false,
-			priority: 'low',
+			priority,
 			order: -1,
 		};
 		onAdd(newTodo);
@@ -30,8 +41,17 @@ export const AddModal: React.FC<Props> = ({ onAdd, onClose }) => {
 						type='text'
 						placeholder='Title'
 						className='w-full rounded-lg border p-2'
+						ref={titleRef}
 					/>
-					<textarea placeholder='Description' />
+					<select
+						ref={priorityRef}
+						defaultValue='low'
+						className='w-full rounded-lg border p-2'
+					>
+						<option value='low'>Low</option>
+						<option value='medium'>Medium</option>
+						<option value='high'>High</option>
+					</select>
 					<div className='flex items-center justify-center gap-2'>
 						<button
 							className='cursor-pointer p-1'

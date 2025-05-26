@@ -13,7 +13,9 @@ export const App = (): JSX.Element => {
 	const [isAddModalOpen, setIsAddModalOpen] = useState(false);
 	const [addedTodos, setAddedTodos] = useState<TodoType[]>([]);
 	const [removedIds, setRemovedIds] = useState<string[]>([]);
+	const [updateTodos, setUpdateTodos] = useState(false);
 	const [loadingSync, setLoadingSync] = useState(false);
+	const [isSyncing, setIsSyncing] = useState(false);
 
 	useEffect(() => {
 		const localTodos = localStorage.getItem(LOCAL_STORAGE_KEY);
@@ -48,14 +50,26 @@ export const App = (): JSX.Element => {
 			updateTodosLocally(data);
 			setAddedTodos([]);
 			setRemovedIds([]);
+			setUpdateTodos(false);
 		}
 	};
 
 	const syncWithSupabase = async (): Promise<void> => {
-		if (addedTodos.length === 0 && removedIds.length === 0) {
+		if (isSyncing) {
 			return;
 		}
+
+		if (
+			addedTodos.length === 0 &&
+			removedIds.length === 0 &&
+			!updateTodos
+		) {
+			console.log('No changes to sync');
+			return;
+		}
+
 		setLoadingSync(true);
+		setIsSyncing(true);
 
 		try {
 			if (removedIds.length > 0) {
@@ -77,27 +91,42 @@ export const App = (): JSX.Element => {
 				}
 			}
 
-			const orderUpdates = todos.map(({ id, order }) => ({ id, order }));
-			for (const { id, order } of orderUpdates) {
-				await supabase.from('todos').update({ order }).eq('id', id);
+			const orderUpdates = todos.map(({ id, order, completed }) => ({
+				id,
+				order,
+				completed,
+			}));
+			for (const { id, order, completed } of orderUpdates) {
+				await supabase
+					.from('todos')
+					.update({ order, completed })
+					.eq('id', id);
 			}
 
 			setAddedTodos([]);
 			setRemovedIds([]);
+			setUpdateTodos(false);
 		} catch (err) {
 			console.error('Error syncing todos', err);
 		} finally {
 			setLoadingSync(false);
+			setIsSyncing(false);
 		}
 	};
 
+	// Ejecuta sync solo cuando haya cambios en addedTodos, removedIds o updateTodos
 	useEffect(() => {
-		syncWithSupabase();
-	}, [todos, addedTodos, removedIds]);
+		const shouldSync =
+			addedTodos.length > 0 || removedIds.length > 0 || updateTodos;
+
+		if (shouldSync && !isSyncing) {
+			syncWithSupabase();
+		}
+	}, [addedTodos, removedIds, updateTodos]);
 
 	useEffect(() => {
 		const handleBeforeUnload = (): void => {
-			if (addedTodos.length > 0 || removedIds.length > 0) {
+			if (addedTodos.length > 0 || removedIds.length > 0 || updateTodos) {
 				syncWithSupabase();
 			}
 		};
@@ -105,7 +134,7 @@ export const App = (): JSX.Element => {
 		return (): void => {
 			window.removeEventListener('beforeunload', handleBeforeUnload);
 		};
-	}, [addedTodos, removedIds, todos]);
+	}, [addedTodos, removedIds, updateTodos]);
 
 	const handleAddTodo = (newTodo: TodoType): void => {
 		const updatedTodos = [
@@ -113,7 +142,8 @@ export const App = (): JSX.Element => {
 			...todos.map((t) => ({ ...t, order: t.order + 1 })),
 		];
 		updateTodosLocally(updatedTodos);
-		setAddedTodos([...addedTodos, { ...newTodo, order: 0 }]);
+		setAddedTodos((prev) => [...prev, { ...newTodo, order: 0 }]);
+		setUpdateTodos(true); // por si la lista cambió en orden también
 		setIsAddModalOpen(false);
 	};
 
@@ -122,11 +152,21 @@ export const App = (): JSX.Element => {
 			.filter((todo) => todo.id !== id)
 			.map((todo, index) => ({ ...todo, order: index }));
 		updateTodosLocally(updatedTodos);
-		setRemovedIds([...removedIds, id]);
+		setRemovedIds((prev) => [...prev, id]);
+		setUpdateTodos(true); // para que sincronice también el reorden
 	};
 
 	const handleReorder = (newTodos: ListOfTodos): void => {
 		updateTodosLocally(newTodos);
+		setUpdateTodos(true);
+	};
+
+	const handleCompletedToggle = (id: string): void => {
+		const updatedTodos = todos.map((todo) =>
+			todo.id === id ? { ...todo, completed: !todo.completed } : todo,
+		);
+		updateTodosLocally(updatedTodos);
+		setUpdateTodos(true);
 	};
 
 	return (
@@ -137,6 +177,7 @@ export const App = (): JSX.Element => {
 				todos={todos}
 				onRemove={handleRemove}
 				onReorder={handleReorder}
+				onCompletedToggle={handleCompletedToggle}
 			/>
 			{isAddModalOpen && (
 				<AddModal
