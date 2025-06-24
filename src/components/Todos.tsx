@@ -107,7 +107,7 @@ export const Todos: React.FC<Props> = ({
 				items={todos.map((t) => t.id)}
 				strategy={verticalListSortingStrategy}
 			>
-				<div className='flex h-[90%] w-[90%] flex-col justify-between gap-2 rounded-3xl bg-slate-100 p-5 shadow-lg shadow-slate-500/50 lg:w-[80%] lg:p-10'>
+				<div className='flex h-[90%] w-[90%] flex-col justify-between gap-2 rounded-3xl bg-slate-100 p-5 shadow-lg shadow-slate-500/50 lg:w-[80%]'>
 					<ul
 						ref={listRef}
 						className={`flex h-full flex-col gap-4 overflow-x-hidden overflow-y-auto pb-4 ${isDragging && 'touch-none'}`}

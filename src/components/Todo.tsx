@@ -17,6 +17,7 @@ const priorityBarColors = {
 
 interface DragHandleProps {
 	listeners?: SyntheticListenerMap;
+	// eslint-disable-next-line @typescript-eslint/no-explicit-any
 	attributes?: Record<string, any>;
 }
 
