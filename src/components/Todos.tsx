@@ -52,6 +52,7 @@ function SortableItem({
 				completed={todo.completed}
 				priority={todo.priority}
 				order={todo.order}
+				createdAt={todo.createdAt}
 				onRemove={onRemove}
 				dragHandleProps={{ listeners, attributes }}
 				onCompletedToggle={onCompletedToggle}

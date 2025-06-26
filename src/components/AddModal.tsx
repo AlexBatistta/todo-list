@@ -28,6 +28,7 @@ export const AddModal: React.FC<Props> = ({ onAdd, onClose }) => {
 			completed: false,
 			priority,
 			order: -1,
+			createdAt: new Date(),
 		};
 		onAdd(newTodo);
 	};
