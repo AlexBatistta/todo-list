@@ -1,7 +1,8 @@
 import { type TodoType } from '../type';
-import { FaCheck, FaRegTimesCircle } from 'react-icons/fa';
+import { FaRegTimesCircle } from 'react-icons/fa';
 import { RiDraggable } from 'react-icons/ri';
 import type { SyntheticListenerMap } from '@dnd-kit/core/dist/hooks/utilities';
+import { Checkbox } from './Checkbox';
 
 const priorityClasses = {
 	low: 'hover:bg-green-200 bg-green-100',
@@ -47,27 +48,11 @@ export const Todo: React.FC<Props> = ({
 			>
 				<RiDraggable className='absolute' />
 			</div>
-
-			<div className='relative flex items-center justify-center'>
-				<input
-					className='h-7 w-8 cursor-pointer appearance-none'
-					type='checkbox'
-					id={id}
-					checked={completed}
-					onChange={() => {
-						onCompletedToggle(id);
-					}}
-				/>
-				<div
-					className={`pointer-events-none absolute h-4 w-4 rounded-full border-2 ${completed ? 'border-slate-500/25' : 'border-slate-500'}`}
-				/>
-				{completed && (
-					<FaCheck
-						className='pointer-events-none absolute text-green-500'
-						size={20}
-					/>
-				)}
-			</div>
+			<Checkbox
+				id={id}
+				checked={completed}
+				onChange={() => onCompletedToggle(id)}
+			/>
 
 			<label className='text-md w-[50%] flex-grow overflow-hidden font-medium text-slate-700 sm:text-sm'>
 				{title}

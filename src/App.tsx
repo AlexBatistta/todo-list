@@ -105,7 +105,6 @@ export const App = (): JSX.Element => {
 		setActiveFilter(filter);
 		const filtered = applyFilters(allTodos, filter);
 		setFilteredTodos(filtered);
-		setIsFilterModalOpen(false);
 	};
 
 	const handleRemove = (id: string): void => {
@@ -145,7 +144,9 @@ export const App = (): JSX.Element => {
 
 	const clearFilters = (): void => {
 		setActiveFilter(null);
-		setFilteredTodos([]);
+		const clearFilters: FilterType = { order: 'manual' };
+		const filtered = applyFilters(allTodos, clearFilters);
+		setFilteredTodos(filtered);
 	};
 
 	return (
@@ -175,6 +176,7 @@ export const App = (): JSX.Element => {
 				<FilterModal
 					onFilter={handleFilterTodo}
 					onClose={() => setIsFilterModalOpen(false)}
+					onClear={clearFilters}
 					currentFilter={activeFilter || undefined}
 				/>
 			)}

@@ -1,16 +1,19 @@
 import React, { useRef, useState, useEffect } from 'react';
 import type { FilterType } from '../type';
-import { FaCheck, FaRegTimesCircle } from 'react-icons/fa';
+import { FaCheck, FaRegTrashAlt } from 'react-icons/fa';
+import { Checkbox } from './Checkbox';
 
 interface Props {
 	onFilter: (filter: FilterType) => void;
 	onClose: () => void;
+	onClear: () => void;
 	currentFilter?: FilterType;
 }
 
 export const FilterModal: React.FC<Props> = ({
 	onFilter,
 	onClose,
+	onClear,
 	currentFilter,
 }) => {
 	const [selectedCompleted, setSelectedCompleted] = useState<boolean[]>([]);
@@ -75,6 +78,15 @@ export const FilterModal: React.FC<Props> = ({
 		onClose();
 	};
 
+	const handleClearFilters = (): void => {
+		setSelectedCompleted([]);
+		setSelectedPriorities([]);
+		if (orderRef.current) {
+			orderRef.current.value = 'manual';
+		}
+		onClear();
+	};
+
 	return (
 		<div className='fixed inset-0 z-50 flex items-center justify-center bg-black/50'>
 			<div className='flex w-[50%] flex-col items-center justify-center rounded-lg bg-slate-300 p-4 shadow-md'>
@@ -88,31 +100,29 @@ export const FilterModal: React.FC<Props> = ({
 							Completion Status
 						</label>
 						<div className='flex gap-4'>
-							<label className='flex cursor-pointer items-center gap-2'>
-								<input
-									type='checkbox'
+							<label className='flex cursor-pointer items-center'>
+								<Checkbox
+									id='pending'
 									checked={selectedCompleted.includes(false)}
-									onChange={(e) =>
+									onChange={() =>
 										handleCompletedChange(
 											false,
-											e.target.checked,
+											!selectedCompleted.includes(false),
 										)
 									}
-									className='cursor-pointer'
 								/>
 								<span className='text-sm'>Pending</span>
 							</label>
-							<label className='flex cursor-pointer items-center gap-2'>
-								<input
-									type='checkbox'
+							<label className='flex cursor-pointer items-center'>
+								<Checkbox
+									id='completed'
 									checked={selectedCompleted.includes(true)}
-									onChange={(e) =>
+									onChange={() =>
 										handleCompletedChange(
 											true,
-											e.target.checked,
+											!selectedCompleted.includes(true),
 										)
 									}
-									className='cursor-pointer'
 								/>
 								<span className='text-sm'>Completed</span>
 							</label>
@@ -124,49 +134,50 @@ export const FilterModal: React.FC<Props> = ({
 							Priority
 						</label>
 						<div className='flex gap-4'>
-							<label className='flex cursor-pointer items-center gap-2'>
-								<input
-									type='checkbox'
+							<label className='flex cursor-pointer items-center'>
+								<Checkbox
+									id='priority-high'
 									checked={selectedPriorities.includes(
 										'high',
 									)}
-									onChange={(e) =>
+									onChange={() =>
 										handlePriorityChange(
 											'high',
-											e.target.checked,
+											!selectedPriorities.includes(
+												'high',
+											),
 										)
 									}
-									className='cursor-pointer'
 								/>
 								<span className='text-sm'>High</span>
 							</label>
-							<label className='flex cursor-pointer items-center gap-2'>
-								<input
-									type='checkbox'
+							<label className='flex cursor-pointer items-center'>
+								<Checkbox
+									id='priority-medium'
 									checked={selectedPriorities.includes(
 										'medium',
 									)}
-									onChange={(e) =>
+									onChange={() =>
 										handlePriorityChange(
 											'medium',
-											e.target.checked,
+											!selectedPriorities.includes(
+												'medium',
+											),
 										)
 									}
-									className='cursor-pointer'
 								/>
 								<span className='text-sm'>Medium</span>
 							</label>
-							<label className='flex cursor-pointer items-center gap-2'>
-								<input
-									type='checkbox'
+							<label className='flex cursor-pointer items-center'>
+								<Checkbox
+									id='priority-low'
 									checked={selectedPriorities.includes('low')}
-									onChange={(e) =>
+									onChange={() =>
 										handlePriorityChange(
 											'low',
-											e.target.checked,
+											!selectedPriorities.includes('low'),
 										)
 									}
-									className='cursor-pointer'
 								/>
 								<span className='text-sm'>Low</span>
 							</label>
@@ -191,10 +202,10 @@ export const FilterModal: React.FC<Props> = ({
 
 					<div className='mt-4 flex items-center justify-center gap-4'>
 						<button
-							className='cursor-pointer p-1'
-							onClick={onClose}
+							className='cursor-pointer'
+							onClick={handleClearFilters}
 						>
-							<FaRegTimesCircle className='pointer-events-none text-3xl text-red-500' />
+							<FaRegTrashAlt className='pointer-events-none text-[27px] text-red-500' />
 						</button>
 						<button
 							className='cursor-pointer rounded-full border-3 border-green-500 p-1'
