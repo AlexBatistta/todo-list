@@ -99,7 +99,7 @@ export const FilterModal: React.FC<Props> = ({
 						<label className='mb-2 block text-base font-medium text-slate-700'>
 							Completion Status
 						</label>
-						<div className='flex gap-4'>
+						<div className='flex flex-col gap-4 sm:flex-row'>
 							<label className='flex cursor-pointer items-center'>
 								<Checkbox
 									id='pending'
@@ -133,7 +133,7 @@ export const FilterModal: React.FC<Props> = ({
 						<label className='mb-2 block text-base font-medium text-slate-700'>
 							Priority
 						</label>
-						<div className='flex gap-4'>
+						<div className='flex flex-col gap-4 sm:flex-row'>
 							<label className='flex cursor-pointer items-center'>
 								<Checkbox
 									id='priority-high'
