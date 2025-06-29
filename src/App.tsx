@@ -4,6 +4,7 @@ import { Header } from './components/Header';
 import { AddModal } from './components/AddModal';
 import type { FilterType, ListOfTodos, TodoType } from './type';
 import { FilterModal } from './components/FilterModal';
+import { Footer } from './components/Footer';
 
 const LOCAL_STORAGE_KEY = 'local_todos';
 
@@ -150,7 +151,7 @@ export const App = (): JSX.Element => {
 	};
 
 	return (
-		<div className='flex h-[100dvh] w-full flex-col items-center justify-around bg-slate-300 py-3 lg:py-5'>
+		<div className='flex h-[100dvh] w-full flex-col items-center justify-around bg-slate-300 py-3'>
 			<Header
 				onAdd={() => setIsAddModalOpen(true)}
 				onFilter={() => {
@@ -180,6 +181,7 @@ export const App = (): JSX.Element => {
 					currentFilter={activeFilter || undefined}
 				/>
 			)}
+			<Footer />
 		</div>
 	);
 };
